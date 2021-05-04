@@ -8,7 +8,7 @@ const HeaderStyle = styled.h1`
 const Header: React.FC = () => {
   return (
     <HeaderStyle>
-      Ruoga
+      🍕 Ruoga
     </HeaderStyle>
   )
 }

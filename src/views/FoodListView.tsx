@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import styled from 'styled-components';
 import Layout from '../components/Layout';
@@ -15,24 +15,27 @@ const FoodListView: React.FC = () => {
   const [
     recipes, recipesLoading, recipesError
   ] = useCollectionData<Recipe>(
-    firestore.collection("recipes"),
+    firestore
+      .collection("recipes"),
     {
+      idField: "id",
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
-  console.log(recipes)
+
   return (
     <Layout>
       {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
       {recipesLoading && <Spinner />}
-
-      <FoodList>
-        {recipes?.map((rcp: Recipe) => (
-          <ListItem>
-            <RecipeItem recipe={rcp} />
-          </ListItem>
-        ))}
-      </FoodList>
+      {recipes && (
+        <FoodList>
+          {recipes.map((rcp: Recipe) => (
+            <ListItem>
+              <RecipeItem recipe={rcp} />
+            </ListItem>
+          ))}
+        </FoodList>
+      )}
       <code>{recipes && <span>Document: {JSON.stringify(recipes)}</span>}</code>
     </Layout>
   )

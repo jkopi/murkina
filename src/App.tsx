@@ -11,7 +11,7 @@ const App: React.FC = () => {
         <Route exact path="/">
           <FoodListView />
         </Route>
-        <Route exact path="/recipe/:id">
+        <Route exact path="/recipe/:recipeId">
           <RecipeView />
         </Route>
       </Switch>
