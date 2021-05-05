@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
 import RecipeItem from '../components/RecipeItem';
@@ -25,6 +26,7 @@ const FoodListView: React.FC = () => {
 
   return (
     <Layout>
+      <button><Link to="/recipe/create">Create new</Link></button>
       {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
       {recipesLoading && <Spinner />}
       {recipes && (
