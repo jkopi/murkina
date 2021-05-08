@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { Button } from '../components/Button';
 import Header from '../components/Header';
 import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
-import { Recipe } from '../interfaces/Recipe';
+import { Ingredient, Recipe } from '../interfaces/Recipe';
 
 const RecipeView: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -46,7 +46,12 @@ const RecipeView: React.FC = () => {
         {recipe && (
           <>
             <h4>{recipe.name}</h4>
-            <p>{recipe?.description}</p>
+            <p>{recipe.description}</p>
+            <ul>
+              {recipe.ingredients?.map((ingredient: Ingredient, index: number) => (
+                <li key={index}>{ingredient.amount} - {ingredient.name}</li>
+              ))}
+            </ul>
             <p>{recipe.createdAt.toDate().toLocaleDateString()}</p>
           </>
         )}
