@@ -26,13 +26,13 @@ const FoodListView: React.FC = () => {
 
   return (
     <Layout>
-      <button><Link to="/recipe/create">Create new</Link></button>
+      <Link to="/recipe/create">Create new</Link>
       {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
       {recipesLoading && <Spinner />}
       {recipes && (
         <FoodList>
-          {recipes.map((rcp: Recipe) => (
-            <ListItem>
+          {recipes.map((rcp: Recipe, index: number) => (
+            <ListItem key={index}>
               <RecipeItem recipe={rcp} />
             </ListItem>
           ))}

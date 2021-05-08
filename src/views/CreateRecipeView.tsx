@@ -1,4 +1,4 @@
-import { Field, Form, Formik, FormikHelpers } from 'formik'
+import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikHelpers } from 'formik'
 import React from 'react'
 import styled from 'styled-components'
 import cuid from 'cuid';
@@ -7,6 +7,7 @@ import { Recipe } from '../interfaces/Recipe'
 import { timestamp, firestore } from '../config/firebase';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Button } from '../components/Button';
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -17,10 +18,14 @@ const FormInput = styled(Field)`
   margin: .5rem;
 `;
 
-const CreateRecipeView: React.FC = () => {
+const IngredientContainer = styled.div`
+  margin: 1rem;
+`;
 
+const CreateRecipeView: React.FC = () => {
   const currentTime = timestamp.fromDate(new Date());
   const history = useHistory();
+
   return (
     <>
       <Header />
@@ -30,6 +35,7 @@ const CreateRecipeView: React.FC = () => {
           id: cuid(),
           name: '',
           description: '',
+          ingredients: [{amount: '', name: ''}],
           createdAt: currentTime
         }}
         onSubmit={(
@@ -50,25 +56,49 @@ const CreateRecipeView: React.FC = () => {
           console.log(JSON.stringify(values));
           setSubmitting(false);
           resetForm();
-        }}>
+        }}
+        render={({ values }) => (
         <Form>
-          <label htmlFor="name">Recipe name</label>
+          <label htmlFor="name">
+            <h3>Recipe name</h3>
+          </label>
           <FormInput
             id="name"
             name="name"
             placeholder="Name"
           />
 
-          <label htmlFor="description">Description</label>
+          <label htmlFor="description">
+            <h3>Description</h3>
+          </label>
           <FormInput
             id="description"
             name="description"
             placeholder="Description"
           />
 
+          <label htmlFor="ingredients">
+            <h3>Ingredients</h3>
+          </label>
+          <FieldArray
+            name="ingredients"
+            render={(helpers: FieldArrayRenderProps) => (
+              <div>
+                {values.ingredients?.map((_, index: number) => (
+                  <IngredientContainer key={index}>
+                    <FormInput name={`ingredients[${index}].amount`}/>
+                    <FormInput name={`ingredients[${index}].name`}/>
+                    <Button onClickEvent={() => helpers.remove(index)}>remove</Button>
+                  </IngredientContainer>
+                ))}
+                <button type="button" onClick={() => helpers.push({ amount: '', name: '' })}>Add new</button>
+              </div>
+            )}
+          />
           <button type="submit">Submit</button>
         </Form>
-      </Formik>
+        )}
+      />
     </>
   )
 }

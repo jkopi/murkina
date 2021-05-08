@@ -13,7 +13,7 @@ interface Props {
 
 export const Button: React.FC<Props> = ({ onClickEvent, children }) => {
   return (
-    <StyledButton onClick={onClickEvent}>
+    <StyledButton type="button" onClick={onClickEvent}>
       {children}
     </StyledButton>
   )
