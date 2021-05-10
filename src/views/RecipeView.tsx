@@ -1,11 +1,13 @@
 import React from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { Button } from '../components/Button';
 import Header from '../components/Header';
+import { IngredientsTable } from '../components/IngredientsTable';
 import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
-import { Ingredient, Recipe } from '../interfaces/Recipe';
+import { Recipe } from '../interfaces/Recipe';
 
 const RecipeView: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -45,23 +47,21 @@ const RecipeView: React.FC = () => {
         {recipeLoading && <Spinner />}
         {recipe && (
           <>
-            <h4>{recipe.name}</h4>
+            <h1>{recipe.name}</h1>
+            <p>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</p>
+            <h4>Ingredients</h4>
+            <IngredientsTable ingredients={recipe.ingredients} />
+            <h4>Description</h4>
             <p>{recipe.description}</p>
-            <ul>
-              {recipe.ingredients?.map((ingredient: Ingredient, index: number) => (
-                <li key={index}>{ingredient.amount} - {ingredient.name}</li>
-              ))}
-            </ul>
-            <p>{recipe.createdAt.toDate().toLocaleDateString()}</p>
           </>
         )}
-        <Button onClickEvent={() => deleteRecipe()}>
+        <Button onClick={() => deleteRecipe()}>
           Delete recipe
         </Button>
-      {recipeError}
-    </div>
-  </>
-)
+        {recipeError}
+      </div>
+    </>
+  )
 }
 
 export default RecipeView;

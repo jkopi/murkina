@@ -6,14 +6,13 @@ const StyledButton = styled.button`
   background-color: "#fff";
 `;
 
-interface Props {
-  onClickEvent: () => void;
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
 }
 
-export const Button: React.FC<Props> = ({ onClickEvent, children }) => {
+export const Button: React.FC<Props> = ({ children, ...props }) => {
   return (
-    <StyledButton type="button" onClick={onClickEvent}>
+    <StyledButton {...props} type="button">
       {children}
     </StyledButton>
   )

@@ -35,7 +35,7 @@ const CreateRecipeView: React.FC = () => {
           id: cuid(),
           name: '',
           description: '',
-          ingredients: [{amount: '', name: ''}],
+          ingredients: [{ amount: '', name: '' }],
           createdAt: currentTime
         }}
         onSubmit={(
@@ -58,45 +58,45 @@ const CreateRecipeView: React.FC = () => {
           resetForm();
         }}
         render={({ values }) => (
-        <Form>
-          <label htmlFor="name">
-            <h3>Recipe name</h3>
-          </label>
-          <FormInput
-            id="name"
-            name="name"
-            placeholder="Name"
-          />
+          <Form>
+            <label htmlFor="name">
+              <h3>Recipe name</h3>
+            </label>
+            <FormInput
+              id="name"
+              name="name"
+              placeholder="Name"
+            />
 
-          <label htmlFor="description">
-            <h3>Description</h3>
-          </label>
-          <FormInput
-            id="description"
-            name="description"
-            placeholder="Description"
-          />
+            <label htmlFor="description">
+              <h3>Description</h3>
+            </label>
+            <FormInput
+              id="description"
+              name="description"
+              placeholder="Description"
+            />
 
-          <label htmlFor="ingredients">
-            <h3>Ingredients</h3>
-          </label>
-          <FieldArray
-            name="ingredients"
-            render={(helpers: FieldArrayRenderProps) => (
-              <div>
-                {values.ingredients?.map((_, index: number) => (
-                  <IngredientContainer key={index}>
-                    <FormInput name={`ingredients[${index}].amount`}/>
-                    <FormInput name={`ingredients[${index}].name`}/>
-                    <Button onClickEvent={() => helpers.remove(index)}>remove</Button>
-                  </IngredientContainer>
-                ))}
-                <button type="button" onClick={() => helpers.push({ amount: '', name: '' })}>Add new</button>
-              </div>
-            )}
-          />
-          <button type="submit">Submit</button>
-        </Form>
+            <label htmlFor="ingredients">
+              <h3>Ingredients</h3>
+            </label>
+            <FieldArray
+              name="ingredients"
+              render={(helpers: FieldArrayRenderProps) => (
+                <div>
+                  {values.ingredients?.map((_, index: number) => (
+                    <IngredientContainer key={index}>
+                      <FormInput name={`ingredients[${index}].amount`} />
+                      <FormInput name={`ingredients[${index}].name`} />
+                      <Button onClick={() => helpers.remove(index)}>remove</Button>
+                    </IngredientContainer>
+                  ))}
+                  <button type="button" onClick={() => helpers.push({ amount: '', name: '' })}>Add new</button>
+                </div>
+              )}
+            />
+            <button type="submit">Submit</button>
+          </Form>
         )}
       />
     </>
