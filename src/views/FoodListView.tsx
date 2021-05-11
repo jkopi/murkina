@@ -31,8 +31,8 @@ const FoodListView: React.FC = () => {
       {recipesLoading && <Spinner />}
       {recipes && (
         <FoodList>
-          {recipes.map((rcp: Recipe, index: number) => (
-            <ListItem key={index}>
+          {recipes.map((rcp: Recipe) => (
+            <ListItem key={rcp.id}>
               <RecipeItem recipe={rcp} />
             </ListItem>
           ))}
