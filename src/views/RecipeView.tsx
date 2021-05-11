@@ -27,6 +27,7 @@ const RecipeView: React.FC = () => {
 
   const deleteRecipe = () => {
     const wantToDelete = window.confirm("Sure about that?");
+
     if (wantToDelete) {
       firestore
         .collection("recipes")
@@ -38,7 +39,6 @@ const RecipeView: React.FC = () => {
           }, 500)
         })
         .catch((error: Error) => {
-          window.alert(error)
           console.error(error)
         })
     }
@@ -61,6 +61,10 @@ const RecipeView: React.FC = () => {
             <p>{recipe.description}</p>
           </RecipeContainer>
         )}
+        <Button onClick={() => console.log("edit")}>
+          Edit recipe
+        </Button>
+        {' '}
         <Button onClick={() => deleteRecipe()}>
           Delete recipe
         </Button>

@@ -2,12 +2,12 @@ import { Field, FieldArray, FieldArrayRenderProps, Form, Formik, FormikHelpers }
 import React from 'react'
 import styled from 'styled-components'
 import cuid from 'cuid';
-import Header from '../components/Header'
 import { Recipe } from '../interfaces/Recipe'
 import { timestamp, firestore } from '../config/firebase';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
+import Layout from '../components/Layout';
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -27,8 +27,7 @@ const CreateRecipeView: React.FC = () => {
   const history = useHistory();
 
   return (
-    <>
-      <Header />
+    <Layout>
       <Link to="/">back</Link>
       <Formik
         initialValues={{
@@ -57,7 +56,8 @@ const CreateRecipeView: React.FC = () => {
           setSubmitting(false);
           resetForm();
         }}
-        render={({ values }) => (
+      >
+        {({ values }) => (
           <Form>
             <label htmlFor="name">
               <h3>Recipe name</h3>
@@ -67,7 +67,6 @@ const CreateRecipeView: React.FC = () => {
               name="name"
               placeholder="Name"
             />
-
             <label htmlFor="description">
               <h3>Description</h3>
             </label>
@@ -76,7 +75,6 @@ const CreateRecipeView: React.FC = () => {
               name="description"
               placeholder="Description"
             />
-
             <label htmlFor="ingredients">
               <h3>Ingredients</h3>
             </label>
@@ -98,8 +96,8 @@ const CreateRecipeView: React.FC = () => {
             <button type="submit">Submit</button>
           </Form>
         )}
-      />
-    </>
+      </Formik>
+    </Layout>
   )
 }
 
