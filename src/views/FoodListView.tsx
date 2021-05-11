@@ -27,7 +27,6 @@ const FoodListView: React.FC = () => {
   return (
     <Layout>
       <Link to="/recipe/create">Create new</Link>
-      {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
       {recipesLoading && <Spinner />}
       {recipes && (
         <FoodList>
@@ -38,7 +37,8 @@ const FoodListView: React.FC = () => {
           ))}
         </FoodList>
       )}
-      <code>{recipes && <span>Document: {JSON.stringify(recipes)}</span>}</code>
+      {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
+      {/* <code>{recipes && <span>Document: {JSON.stringify(recipes)}</span>}</code> */}
     </Layout>
   )
 }
