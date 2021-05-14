@@ -3,7 +3,9 @@ import styled from 'styled-components'
 
 const StyledButton = styled.button`
   border: 1px solid black;
+  border-radius: 4px;
   background-color: "#fff";
+  min-height: 2rem;
 `;
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -11,15 +11,21 @@ import Layout from '../components/Layout';
 
 const FormInput = styled(Field)`
   padding: .5rem;
-  font-size: 16px;
-  display: block;
+  font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #ccc;
   margin: .5rem;
 `;
 
+const TextArea = styled.textarea`
+  min-width: 200px;
+  min-height: 50px;
+`;
+
 const IngredientContainer = styled.div`
-  margin: 1rem;
+  display: flex;
+  flex: 1;
+  align-items: center;
 `;
 
 const CreateRecipeView: React.FC = () => {
@@ -71,6 +77,7 @@ const CreateRecipeView: React.FC = () => {
               <h3>Description</h3>
             </label>
             <FormInput
+              as={TextArea}
               id="description"
               name="description"
               placeholder="Description"
@@ -82,10 +89,10 @@ const CreateRecipeView: React.FC = () => {
               name="ingredients"
               render={(helpers: FieldArrayRenderProps) => (
                 <div>
-                  {values.ingredients?.map((_, index: number) => (
-                    <IngredientContainer key={index}>
-                      <FormInput name={`ingredients[${index}].amount`} />
-                      <FormInput name={`ingredients[${index}].name`} />
+                  {values.ingredients?.map((_, index) => (
+                    <IngredientContainer>
+                      <FormInput placeholder="Amount" name={`ingredients[${index}].amount`} />
+                      <FormInput placeholder="Name" name={`ingredients[${index}].name`} />
                       <Button onClick={() => helpers.remove(index)}>remove</Button>
                     </IngredientContainer>
                   ))}
