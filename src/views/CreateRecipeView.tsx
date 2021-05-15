@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import Layout from '../components/Layout';
+import { ImagePreview } from '../components/ImagePreview';
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -73,6 +74,8 @@ const CreateRecipeView: React.FC = () => {
               name="name"
               placeholder="Name"
             />
+            <ImagePreview />
+
             <label htmlFor="description">
               <h3>Description</h3>
             </label>
@@ -96,10 +99,11 @@ const CreateRecipeView: React.FC = () => {
                       <Button onClick={() => helpers.remove(index)}>remove</Button>
                     </IngredientContainer>
                   ))}
-                  <button type="button" onClick={() => helpers.push({ amount: '', name: '' })}>Add new</button>
+                  <Button onClick={() => helpers.push({ amount: '', name: '' })}>Add new</Button>
                 </div>
               )}
             />
+            <hr />
             <button type="submit">Submit</button>
           </Form>
         )}
