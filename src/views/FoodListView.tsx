@@ -8,7 +8,10 @@ import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
 
-const FoodList = styled.ul``;
+const FoodList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
 
 const ListItem = styled.li``;
 

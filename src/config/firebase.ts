@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore"
+import "firebase/storage"
 
 const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,8 +15,10 @@ const config = {
 firebase.initializeApp(config);
 const firestore = firebase.firestore();
 const timestamp = firebase.firestore.Timestamp;
+const storage = firebase.storage().ref();
 
 export {
   firestore,
-  timestamp
+  timestamp,
+  storage
 }

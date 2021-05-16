@@ -13,7 +13,7 @@ const StyledButton = styled.button`
   /* background-color: ${(props: StyleProps) => (props.primary ? '#89d4ff' : 'white')}; */
   min-height: 2rem;
   &:hover {
-    background-color: #acacac;
+    background-color: #ffc299;
     transition: 200ms linear;
   }
 `;

@@ -1,21 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import styled from 'styled-components';
 import { Button } from './Button';
 
-export const ImagePreview: React.FC = () => {
-  const [file, setFile] = useState<File | undefined>();
-  const [preview, setPreview] = useState<string | undefined>();
+const Image = styled.img`
+  height: 500px;
+`;
 
+interface Props {
+  file: File | undefined;
+  setFile(file: File | undefined): void;
+  preview: string | undefined;
+  setPreview(preview: string | undefined): void;
+}
+
+export const ImagePreview: React.FC<Props> = ({ file, setFile, preview, setPreview }) => {
   useEffect(() => {
+    console.log("mounted")
     if (!file) {
+      console.log("no file")
       setPreview(undefined)
       return
     }
 
     const fileUrl = URL.createObjectURL(file)
     setPreview(fileUrl)
-
+    console.log(file.name)
     return () => URL.revokeObjectURL(fileUrl)
-  }, [file])
+  }, [file, setPreview])
 
   const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFile(event.target.files![0])
@@ -27,7 +38,7 @@ export const ImagePreview: React.FC = () => {
       {preview && (
         <>
           <Button onClick={() => setPreview(undefined)}>Clear</Button>
-          <img src={preview} alt={file?.name} />
+          <Image src={preview} alt={file?.name} />
         </>
       )}
     </div>

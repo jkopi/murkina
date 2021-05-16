@@ -1,15 +1,30 @@
 import React from 'react'
 import styled from "styled-components";
 
-const HeaderStyle = styled.h1`
-  color: #cc8500;
+const HeaderBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid black;
+  align-items: center;
 `;
 
-const Header: React.FC = () => {
+const HeaderStyle = styled.h1`
+  color: #cc8500;
+  margin-right: 2rem;
+`;
+
+interface Props {
+  children?: React.ReactNode;
+}
+
+const Header: React.FC<Props> = ({ children }) => {
   return (
-    <HeaderStyle>
-      🍕 murkina
-    </HeaderStyle>
+    <HeaderBar>
+      <HeaderStyle>
+        🍕 murkina
+      </HeaderStyle>
+      {children}
+    </HeaderBar>
   )
 }
 

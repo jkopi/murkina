@@ -8,7 +8,6 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import Layout from '../components/Layout';
-import { ImagePreview } from '../components/ImagePreview';
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -18,10 +17,10 @@ const FormInput = styled(Field)`
   margin: .5rem;
 `;
 
-const TextArea = styled.textarea`
-  min-width: 200px;
-  min-height: 50px;
-`;
+// const TextArea = styled.textarea`
+//   min-width: 200px;
+//   min-height: 50px;
+// `;
 
 const IngredientContainer = styled.div`
   display: flex;
@@ -59,6 +58,7 @@ const CreateRecipeView: React.FC = () => {
             .catch((error: Error) => {
               setStatus(error)
             })
+
           console.log(JSON.stringify(values));
           setSubmitting(false);
           resetForm();
@@ -74,13 +74,11 @@ const CreateRecipeView: React.FC = () => {
               name="name"
               placeholder="Name"
             />
-            <ImagePreview />
 
             <label htmlFor="description">
               <h3>Description</h3>
             </label>
             <FormInput
-              as={TextArea}
               id="description"
               name="description"
               placeholder="Description"
