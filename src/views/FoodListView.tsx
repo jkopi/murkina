@@ -1,6 +1,5 @@
 import React from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Layout from '../components/Layout';
 import RecipeItem from '../components/RecipeItem';
@@ -29,7 +28,6 @@ const FoodListView: React.FC = () => {
 
   return (
     <Layout>
-      <Link to="/recipe/create">Create new</Link>
       {recipesLoading && <Spinner />}
       {recipes && (
         <FoodList>
