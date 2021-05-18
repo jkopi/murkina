@@ -91,7 +91,7 @@ const CreateRecipeView: React.FC = () => {
               render={(helpers: FieldArrayRenderProps) => (
                 <div>
                   {values.ingredients?.map((_, index) => (
-                    <IngredientContainer>
+                    <IngredientContainer key={index}>
                       <FormInput placeholder="Amount" name={`ingredients[${index}].amount`} />
                       <FormInput placeholder="Name" name={`ingredients[${index}].name`} />
                       <Button onClick={() => helpers.remove(index)}>remove</Button>

@@ -14,7 +14,7 @@ const SideBar = styled.div`
   height: 100%;
   position: fixed;
   overflow-x: hidden;
-  padding: 5px;
+  padding-right: 5px;
   left: 0;
 
   border: 1px solid grey;
@@ -29,6 +29,19 @@ const Item = styled.li`
   margin: .5rem;
 `;
 
+const StyledLink = styled(Link)`
+  color: black;
+  padding: 2px;
+  text-decoration: none;
+
+  &&:hover {
+    /* border: 1px solid grey; */
+    border-radius: 5px;
+    background-color: #ffaa64;
+    transition: 200ms linear;
+  }
+`;
+
 interface Props {
   children?: React.ReactNode;
 }
@@ -39,12 +52,23 @@ const Layout: React.FC<Props> = ({ children }) => {
       <Header />
       <SideBar>
         <List>
-          <Item>Recipes</Item>
-          <Item>My recipes</Item>
           <Item>
-            <Link to="/recipe/create">
+            <StyledLink to="/">
+              <span>All recipes</span>
+            </StyledLink>
+          </Item>
+          {/* <Item>
+            *
+            * - Should be displayed when user is authenticated
+            *
+            <StyledLink to="/recipe/create">
+              <span>My recipes</span>
+            </StyledLink>
+          </Item> */}
+          <Item>
+            <StyledLink to="/recipe/create">
               <span>Create new</span>
-            </Link>
+            </StyledLink>
           </Item>
         </List>
       </SideBar>
