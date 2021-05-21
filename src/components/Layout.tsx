@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
+import { auth } from '../config/firebase';
 import Header from './Header';
 
 const Container = styled.div`
@@ -12,12 +13,10 @@ const Container = styled.div`
 const SideBar = styled.div`
   width: 200px;
   height: 100%;
-  position: fixed;
+  float: left;
   overflow-x: hidden;
   padding-right: 5px;
   left: 0;
-
-  border: 1px solid grey;
 `;
 
 const List = styled.ul`
@@ -27,6 +26,8 @@ const List = styled.ul`
 
 const Item = styled.li`
   margin: .5rem;
+  padding: .5rem;
+  border-bottom: 1px solid grey;
 `;
 
 const StyledLink = styled(Link)`
@@ -57,19 +58,25 @@ const Layout: React.FC<Props> = ({ children }) => {
               <span>All recipes</span>
             </StyledLink>
           </Item>
-          {/* <Item>
-            *
-            * - Should be displayed when user is authenticated
-            *
-            <StyledLink to="/recipe/create">
-              <span>My recipes</span>
-            </StyledLink>
-          </Item> */}
           <Item>
             <StyledLink to="/recipe/create">
               <span>Create new</span>
             </StyledLink>
           </Item>
+          {!!auth.currentUser && (
+            <>
+              <Item>
+                <StyledLink to="/">
+                  <span>My recipes</span>
+                </StyledLink>
+              </Item>
+              <Item>
+                <StyledLink to="/sign-out">
+                  <span>Logout</span>
+                </StyledLink>
+              </Item>
+            </>
+          )}
         </List>
       </SideBar>
       <Container>
