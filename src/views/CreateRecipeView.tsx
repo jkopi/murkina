@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import Layout from '../components/Layout';
+import * as Yup from 'yup';
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -28,9 +29,24 @@ const IngredientContainer = styled.div`
   align-items: center;
 `;
 
+const ErrorText = styled.p`
+  color: #ff0000;
+`;
+
 const CreateRecipeView: React.FC = () => {
   const currentTime = timestamp.fromDate(new Date());
   const history = useHistory();
+
+  const recipeSchema = Yup.object().shape({
+    name: Yup.string()
+             .min(0, "Please enter a recipe name!")
+             .max(50, "Recipe name is too long!")
+             .required("Recipe name is required!"),
+    description: Yup.string()
+                    .min(0, "Please enter a description!")
+                    .max(150, "Description is too long!")
+                    .required("Recipe description is required!")
+  });
 
   return (
     <Layout>
@@ -43,6 +59,7 @@ const CreateRecipeView: React.FC = () => {
           ingredients: [{ amount: '', name: '' }],
           createdAt: currentTime
         }}
+        validationSchema={recipeSchema}
         onSubmit={(
           values: Recipe,
           { setSubmitting, resetForm, setStatus }: FormikHelpers<Recipe>
@@ -64,7 +81,7 @@ const CreateRecipeView: React.FC = () => {
           resetForm();
         }}
       >
-        {({ values }) => (
+        {({ values, errors }) => (
           <Form>
             <label htmlFor="name">
               <h3>Recipe name</h3>
@@ -74,6 +91,9 @@ const CreateRecipeView: React.FC = () => {
               name="name"
               placeholder="Name"
             />
+            {errors.name && (
+              <ErrorText>{errors.name}</ErrorText>
+            )}
 
             <label htmlFor="description">
               <h3>Description</h3>
@@ -83,6 +103,10 @@ const CreateRecipeView: React.FC = () => {
               name="description"
               placeholder="Description"
             />
+            {errors.description && (
+              <ErrorText>{errors.description}</ErrorText>
+            )}
+
             <label htmlFor="ingredients">
               <h3>Ingredients</h3>
             </label>
