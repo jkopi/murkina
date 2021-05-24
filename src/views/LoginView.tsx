@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router'
 import { auth, googleProvider } from '../config/firebase'
 
-export const LoginView: React.FC = () => {
+const LoginView: React.FC = () => {
   const [error, setError] = useState<Error>();
   const history = useHistory();
 
@@ -28,3 +28,5 @@ export const LoginView: React.FC = () => {
     </div>
   )
 }
+
+export default LoginView;

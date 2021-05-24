@@ -26,12 +26,6 @@ export const AuthGuard: React.FC<Props> = ({ children }) => {
  //     <p>Error!</p>
  //   )
  // }
-  if (true) {
-    return (
-      <>
-        {children}
-      </>
-    )
-  }
+
   return null;
 }

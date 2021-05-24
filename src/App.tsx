@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import FoodListView from './views/FoodListView';
+import RecipeListView from './views/RecipeListView';
 import RecipeView from './views/RecipeView';
 import CreateRecipeView from './views/CreateRecipeView';
-import { LoginView } from './views/LoginView';
+import LoginView from './views/LoginView';
 import LogoutView from './views/LogoutView';
 
 const App: React.FC = () => {
@@ -22,7 +22,7 @@ const App: React.FC = () => {
       </Switch>
       <Switch>
         <Route exact path="/">
-          <FoodListView />
+          <RecipeListView />
         </Route>
         <Route exact path="/recipe/create">
           <CreateRecipeView />

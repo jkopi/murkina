@@ -39,7 +39,6 @@ const FoodListView: React.FC = () => {
         </FoodList>
       )}
       {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
-      {/* <code>{recipes && <span>Document: {JSON.stringify(recipes)}</span>}</code> */}
     </Layout>
   )
 }

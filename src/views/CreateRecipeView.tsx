@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import Layout from '../components/Layout';
 import * as Yup from 'yup';
+import { Input } from '../components/Input';
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -29,23 +30,19 @@ const IngredientContainer = styled.div`
   align-items: center;
 `;
 
-const ErrorText = styled.p`
-  color: #ff0000;
-`;
-
 const CreateRecipeView: React.FC = () => {
   const currentTime = timestamp.fromDate(new Date());
   const history = useHistory();
 
   const recipeSchema = Yup.object().shape({
     name: Yup.string()
-             .min(0, "Please enter a recipe name!")
-             .max(50, "Recipe name is too long!")
-             .required("Recipe name is required!"),
+      .min(0, "Please enter a recipe name!")
+      .max(50, "Recipe name is too long!")
+      .required("Recipe name is required!"),
     description: Yup.string()
-                    .min(0, "Please enter a description!")
-                    .max(150, "Description is too long!")
-                    .required("Recipe description is required!")
+      .min(0, "Please enter a description!")
+      .max(150, "Description is too long!")
+      .required("Recipe description is required!")
   });
 
   return (
@@ -81,31 +78,25 @@ const CreateRecipeView: React.FC = () => {
           resetForm();
         }}
       >
-        {({ values, errors }) => (
+        {({ values }) => (
           <Form>
             <label htmlFor="name">
               <h3>Recipe name</h3>
             </label>
-            <FormInput
-              id="name"
+            <Input
               name="name"
-              placeholder="Name"
+              type="text"
+              placeholder="Recipe name"
             />
-            {errors.name && (
-              <ErrorText>{errors.name}</ErrorText>
-            )}
 
             <label htmlFor="description">
               <h3>Description</h3>
             </label>
-            <FormInput
-              id="description"
+            <Input
               name="description"
+              type="text"
               placeholder="Description"
             />
-            {errors.description && (
-              <ErrorText>{errors.description}</ErrorText>
-            )}
 
             <label htmlFor="ingredients">
               <h3>Ingredients</h3>
