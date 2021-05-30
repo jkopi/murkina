@@ -10,6 +10,7 @@ import { Button } from '../components/Button';
 import Layout from '../components/Layout';
 import * as Yup from 'yup';
 import { Input } from '../components/Input';
+import toast from 'react-hot-toast';
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -33,6 +34,21 @@ const IngredientContainer = styled.div`
 const CreateRecipeView: React.FC = () => {
   const currentTime = timestamp.fromDate(new Date());
   const history = useHistory();
+
+  const createRecipe = (values: Recipe) => {
+    firestore
+      .collection("recipes")
+      .add(values)
+      .then(() => {
+        toast.success(`Created ${values.name}`);
+        setTimeout(() => {
+          history.push("/");
+        }, 500)
+      })
+      .catch((error: Error) => {
+        toast.error(`${error}`)
+      })
+  }
 
   const recipeSchema = Yup.object().shape({
     name: Yup.string()
@@ -59,23 +75,12 @@ const CreateRecipeView: React.FC = () => {
         validationSchema={recipeSchema}
         onSubmit={(
           values: Recipe,
-          { setSubmitting, resetForm, setStatus }: FormikHelpers<Recipe>
+          { setSubmitting, resetForm }: FormikHelpers<Recipe>
         ) => {
-          firestore
-            .collection("recipes")
-            .add(values)
-            .then(() => {
-              setTimeout(() => {
-                history.push("/")
-              }, 500)
-            })
-            .catch((error: Error) => {
-              setStatus(error)
-            })
-
-          console.log(JSON.stringify(values));
+          createRecipe(values);
           setSubmitting(false);
           resetForm();
+          console.log(JSON.stringify(values));
         }}
       >
         {({ values }) => (

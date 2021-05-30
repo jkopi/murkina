@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import toast from 'react-hot-toast';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../components/Button';
 import { IngredientsTable } from '../components/IngredientsTable';
 import Layout from '../components/Layout';
+import { Modal } from '../components/Modal';
 import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
@@ -14,6 +16,8 @@ const RecipeContainer = styled.div``;
 const RecipeView: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
   const history = useHistory();
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [
     recipe,
@@ -34,12 +38,14 @@ const RecipeView: React.FC = () => {
         .doc(recipeId)
         .delete()
         .then((_) => {
+          toast.success("Recipe deleted");
           setTimeout(() => {
-            history.push("/")
+            history.push("/");
           }, 500)
         })
         .catch((error: Error) => {
-          console.error(error)
+          toast.error(`${error}`);
+          console.error(error);
         })
     }
   }
@@ -61,7 +67,7 @@ const RecipeView: React.FC = () => {
             <p>{recipe.description}</p>
           </RecipeContainer>
         )}
-        <Button onClick={() => console.log("edit")}>
+        <Button onClick={() => setIsOpen(!isOpen)}>
           Edit recipe
         </Button>
         {' '}
@@ -70,6 +76,10 @@ const RecipeView: React.FC = () => {
         </Button>
         {recipeError}
       </div>
+      <Modal isOpen={isOpen}>
+        <p>Recipe details...</p>
+        <button onClick={() => setIsOpen(!isOpen)}>Close</button>
+      </Modal>
     </Layout>
   )
 }

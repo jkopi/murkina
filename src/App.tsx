@@ -6,6 +6,8 @@ import RecipeView from './views/RecipeView';
 import CreateRecipeView from './views/CreateRecipeView';
 import LoginView from './views/LoginView';
 import LogoutView from './views/LogoutView';
+import { Toaster } from 'react-hot-toast';
+import ToastConfig from './config/toaster';
 
 const App: React.FC = () => {
   return (
@@ -31,6 +33,7 @@ const App: React.FC = () => {
           <RecipeView />
         </Route>
       </Switch>
+      <Toaster toastOptions={ToastConfig}/>
     </Router>
   );
 }

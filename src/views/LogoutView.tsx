@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router';
-import { auth, googleProvider } from '../config/firebase';
+import { auth } from '../config/firebase';
 
 const LogoutView: React.FC = () => {
   const [error, setError] = useState<Error>();
