@@ -45,7 +45,7 @@ const RecipeView: React.FC = () => {
         })
         .catch((error: Error) => {
           toast.error(`${error}`);
-          console.error(error);
+          console.error(error.name);
         })
     }
   }
@@ -56,27 +56,29 @@ const RecipeView: React.FC = () => {
         <Link to="/">back</Link>
         {recipeLoading && <Spinner />}
         {recipe && (
-          <RecipeContainer>
-            <h1>{recipe.name}</h1>
-            <p>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</p>
-            <h2>Ingredients</h2>
-            <hr />
-            <IngredientsTable ingredients={recipe.ingredients} />
-            <h2>Description</h2>
-            <hr />
-            <p>{recipe.description}</p>
-          </RecipeContainer>
+          <>
+            <RecipeContainer>
+              <h1>{recipe.name}</h1>
+              <p>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</p>
+              <h2>Ingredients</h2>
+              <hr />
+              <IngredientsTable ingredients={recipe.ingredients} />
+              <h2>Description</h2>
+              <hr />
+              <p>{recipe.description}</p>
+            </RecipeContainer>
+            <Button onClick={() => setIsOpen(!isOpen)}>
+              Edit recipe
+            </Button>
+            {' '}
+            <Button onClick={() => deleteRecipe()}>
+              Delete recipe
+            </Button>
+          </>
         )}
-        <Button onClick={() => setIsOpen(!isOpen)}>
-          Edit recipe
-        </Button>
-        {' '}
-        <Button onClick={() => deleteRecipe()}>
-          Delete recipe
-        </Button>
         {recipeError}
       </div>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} recipe={recipe}>
         <p>Recipe details...</p>
         <button onClick={() => setIsOpen(!isOpen)}>Close</button>
       </Modal>

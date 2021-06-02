@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { useHistory } from 'react-router'
 import { auth, googleProvider } from '../config/firebase'
 
@@ -11,9 +12,8 @@ const LoginView: React.FC = () => {
       .signInWithPopup(googleProvider)
       .then((res) => {
         console.log(res);
-          setTimeout(() => {
-            history.push("/")
-          }, 2000);
+        toast.success(`Logged in as ${res.user?.displayName}`)
+        history.push("/");
       })
       .catch((error: Error) => {
         console.error(error);

@@ -1,12 +1,14 @@
 const ToastConfig = {
   success: {
     style: {
-      background: 'green'
+      background: 'green',
+      color: 'white'
     }
   },
   error: {
     style: {
-      background: 'red'
+      background: 'red',
+      color: 'white'
     }
   }
 };
