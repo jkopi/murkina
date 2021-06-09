@@ -7,6 +7,7 @@ import { Button } from '../components/Button';
 import { IngredientsTable } from '../components/IngredientsTable';
 import Layout from '../components/Layout';
 import { Modal } from '../components/Modal';
+import { EditForm } from '../components/RecipeForm/EditForm';
 import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
@@ -78,8 +79,8 @@ const RecipeView: React.FC = () => {
         )}
         {recipeError}
       </div>
-      <Modal isOpen={isOpen} recipe={recipe}>
-        <p>Recipe details...</p>
+      <Modal isOpen={isOpen}>
+        <EditForm id={recipeId} data={recipe}/>
         <button onClick={() => setIsOpen(!isOpen)}>Close</button>
       </Modal>
     </Layout>

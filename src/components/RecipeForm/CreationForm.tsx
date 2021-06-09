@@ -1,5 +1,5 @@
 import cuid from 'cuid';
-import { Form, Field, FieldArray, FieldArrayRenderProps, Formik, FormikHelpers } from 'formik'
+import { Field, FieldArray, FieldArrayRenderProps, Formik, FormikHelpers } from 'formik'
 import React from 'react'
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router';
@@ -7,14 +7,9 @@ import styled from 'styled-components';
 import { firestore, timestamp } from '../../config/firebase';
 import { Recipe } from '../../interfaces/Recipe'
 import { Button } from '../Button';
-import { Input } from '../Input';
+import { FormComponent } from './FormComponent';
+import { Input } from './Input';
 import RecipeSchema from './Schema';
-
-interface Props {
-  isCreating?: boolean;
-  recipe?: Recipe;
-  children?: React.ReactNode;
-}
 
 const FormInput = styled(Field)`
   padding: .5rem;
@@ -30,7 +25,7 @@ const IngredientContainer = styled.div`
   align-items: center;
 `;
 
-export const RecipeForm: React.FC<Props> = ({ isCreating, recipe, children }) => {
+export const CreationForm: React.FC = () => {
   const currentTime = timestamp.fromDate(new Date());
   const history = useHistory();
 
@@ -67,12 +62,12 @@ export const RecipeForm: React.FC<Props> = ({ isCreating, recipe, children }) =>
       ) => {
         createRecipe(values);
         setSubmitting(false);
-        resetForm();
+        // resetForm();
         console.log(JSON.stringify(values));
       }}
     >
       {({ values }) => (
-        <Form>
+        <FormComponent>
           <label htmlFor="name">
             <h3>Recipe name</h3>
           </label>
@@ -98,11 +93,11 @@ export const RecipeForm: React.FC<Props> = ({ isCreating, recipe, children }) =>
             name="ingredients"
             render={(helpers: FieldArrayRenderProps) => (
               <div>
-                {values.ingredients?.map((_, index) => (
-                  <IngredientContainer key={index}>
-                    <FormInput placeholder="Amount" name={`ingredients[${index}].amount`} />
-                    <FormInput placeholder="Name" name={`ingredients[${index}].name`} />
-                    <Button onClick={() => helpers.remove(index)}>remove</Button>
+                {values.ingredients?.map((_, i) => (
+                  <IngredientContainer key={i}>
+                    <FormInput placeholder="Amount" name={`ingredients[${i}].amount`} />
+                    <FormInput placeholder="Name" name={`ingredients[${i}].name`} />
+                    <Button onClick={() => helpers.remove(i)}>remove</Button>
                   </IngredientContainer>
                 ))}
                 <Button onClick={() => helpers.push({ amount: '', name: '' })}>Add new</Button>
@@ -111,7 +106,7 @@ export const RecipeForm: React.FC<Props> = ({ isCreating, recipe, children }) =>
           />
           <hr />
           <button type="submit">Submit</button>
-        </Form>
+        </FormComponent>
       )}
     </Formik>
   )
