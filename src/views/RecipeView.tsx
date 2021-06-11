@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
+import toast from 'react-hot-toast';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../components/Button';
 import { IngredientsTable } from '../components/IngredientsTable';
 import Layout from '../components/Layout';
+import { Modal } from '../components/Modal';
+import { EditForm } from '../components/RecipeForm/EditForm';
 import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
@@ -14,6 +17,8 @@ const RecipeContainer = styled.div``;
 const RecipeView: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
   const history = useHistory();
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [
     recipe,
@@ -34,12 +39,14 @@ const RecipeView: React.FC = () => {
         .doc(recipeId)
         .delete()
         .then((_) => {
+          toast.success("Recipe deleted");
           setTimeout(() => {
-            history.push("/")
+            history.push("/");
           }, 500)
         })
         .catch((error: Error) => {
-          console.error(error)
+          toast.error(`${error}`);
+          console.error(error.name);
         })
     }
   }
@@ -50,26 +57,32 @@ const RecipeView: React.FC = () => {
         <Link to="/">back</Link>
         {recipeLoading && <Spinner />}
         {recipe && (
-          <RecipeContainer>
-            <h1>{recipe.name}</h1>
-            <p>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</p>
-            <h2>Ingredients</h2>
-            <hr />
-            <IngredientsTable ingredients={recipe.ingredients} />
-            <h2>Description</h2>
-            <hr />
-            <p>{recipe.description}</p>
-          </RecipeContainer>
+          <>
+            <RecipeContainer>
+              <h1>{recipe.name}</h1>
+              <p>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</p>
+              <h2>Ingredients</h2>
+              <hr />
+              <IngredientsTable ingredients={recipe.ingredients} />
+              <h2>Description</h2>
+              <hr />
+              <p>{recipe.description}</p>
+            </RecipeContainer>
+            <Button onClick={() => setIsOpen(!isOpen)}>
+              Edit recipe
+            </Button>
+            {' '}
+            <Button onClick={() => deleteRecipe()}>
+              Delete recipe
+            </Button>
+          </>
         )}
-        <Button onClick={() => console.log("edit")}>
-          Edit recipe
-        </Button>
-        {' '}
-        <Button onClick={() => deleteRecipe()}>
-          Delete recipe
-        </Button>
         {recipeError}
       </div>
+      <Modal isOpen={isOpen}>
+        <EditForm id={recipeId} data={recipe}/>
+        <button onClick={() => setIsOpen(!isOpen)}>Close</button>
+      </Modal>
     </Layout>
   )
 }

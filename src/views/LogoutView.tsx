@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { useHistory } from 'react-router';
-import { auth, googleProvider } from '../config/firebase';
+import { auth } from '../config/firebase';
 
 const LogoutView: React.FC = () => {
   const [error, setError] = useState<Error>();
@@ -9,13 +10,12 @@ const LogoutView: React.FC = () => {
   const signOut = () => {
     auth
       .signOut()
-      .then((res) => {
-        console.log(res);
-          setTimeout(() => {
-            history.push("/")
-          }, 2000);
+      .then((_) => {
+        toast.success(`Logout success`);
+        history.push("/");
       })
       .catch((error: Error) => {
+        toast.success("Something went wrong");
         console.error(error);
         setError(error);
       })

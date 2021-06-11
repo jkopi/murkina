@@ -14,7 +14,7 @@ const TableBody = styled.tbody``;
 const TableRow = styled.tr`
   transition: 200ms;
   &:hover {
-    background-color: #7c7c7c;
+    background-color: #ffbc85;
   }
 `;
 
