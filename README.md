@@ -5,7 +5,6 @@ Food related application in the making 🍕
 
 ## Local installation
 
-This project uses firebase as backend, 
 
 1. initialize a firebase project in [firebase console](https://console.firebase.google.com/u/0/)
 2. create a web app for firebase in project overview page
@@ -18,9 +17,9 @@ git clone https://github.com/jkopi/murkina.git
 6. install dependencies by running
 ```sh
 yarn
-``` 
-or 
-```sh
+
+# or 
+
 npm install
 ```
 7. create a .env file into the project root (see .env.example) and paste in the firebase web app configuration
