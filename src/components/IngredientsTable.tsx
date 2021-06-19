@@ -1,27 +1,6 @@
+import { Table, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import React from 'react'
-import styled from 'styled-components'
 import { Ingredient } from '../interfaces/Recipe'
-
-const Table = styled.table`
-  width: 100%;
-  table-layout: auto;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-`;
-
-const TableBody = styled.tbody``;
-
-const TableRow = styled.tr`
-  transition: 200ms;
-  &:hover {
-    background-color: #ffbc85;
-  }
-`;
-
-const TableCell = styled.td`
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-`;
 
 interface Props {
   ingredients?: Ingredient[];
@@ -29,19 +8,25 @@ interface Props {
 
 export const IngredientsTable: React.FC<Props> = ({ ingredients }) => {
   return (
-    <Table>
-      <TableBody>
+    <Table colorScheme="orange">
+      <Thead>
+        <Tr>
+          <Th>amount</Th>
+          <Th>ingredient</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
         {ingredients?.map((ingredient) => (
-          <TableRow key={ingredient.name}>
-            <TableCell>
+          <Tr key={ingredient.name}>
+            <Td>
               <span>{ingredient.amount}</span>
-            </TableCell>
-            <TableCell>
+            </Td>
+            <Td>
               <span>{ingredient.name}</span>
-            </TableCell>
-          </TableRow>
+            </Td>
+          </Tr>
         ))}
-      </TableBody>
+      </Tbody>
     </Table>
   )
 }

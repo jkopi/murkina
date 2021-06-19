@@ -1,6 +1,5 @@
 import React from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import Spinner from './Spinner'
 
 interface Props {
   children?: React.ReactNode;

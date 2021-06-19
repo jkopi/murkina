@@ -1,3 +1,4 @@
+import { Flex, Heading } from '@chakra-ui/react';
 import React from 'react'
 import styled from "styled-components";
 
@@ -19,12 +20,12 @@ interface Props {
 
 const Header: React.FC<Props> = ({ children }) => {
   return (
-    <HeaderBar>
-      <HeaderStyle>
+    <Flex>
+      <Heading fontWeight="fontWeights.normal">
         🍕 murkina
-      </HeaderStyle>
+      </Heading>
       {children}
-    </HeaderBar>
+    </Flex>
   )
 }
 

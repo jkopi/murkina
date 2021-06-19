@@ -1,18 +1,7 @@
+import { Box, Button, Divider, Text } from '@chakra-ui/react';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import styled from 'styled-components'
 import { Recipe } from '../interfaces/Recipe';
-import { Button } from './Button';
-
-const Item = styled.div`
-  width: 100%;
-  margin: 1rem;
-  border-bottom: 1px solid #cfcfcf;
-`;
-
-const ItemHeading = styled.h2`
-  font-size: 1.5rem;
-`;
 
 interface Props {
   recipe: Recipe;
@@ -20,15 +9,18 @@ interface Props {
 
 const RecipeItem: React.FC<Props> = ({ recipe }) => {
   return (
-    <Item>
-      <ItemHeading>{recipe.name}</ItemHeading>
+    <Box mb="5" mt="5">
+      <Text fontSize="x-large">{recipe.name}</Text>
       <Link to={`/recipe/${recipe.id}`}>
-        <Button style={{ border: "2px #ca4a00 solid", padding: ".5rem" }}>
-          VIEW RECIPE
+        <Button border="1px" variant="outline" borderColor="orange.500" colorScheme="orange" textColor="brand.900">
+          view recipe
         </Button>
       </Link>
-      <p>{recipe.description}</p>
-    </Item>
+      <Box mb="2" mt="2">
+        <Text>{recipe.description}</Text>
+      </Box>
+      <Divider />
+    </Box>
   )
 }
 
