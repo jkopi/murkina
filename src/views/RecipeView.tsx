@@ -6,13 +6,25 @@ import styled from 'styled-components';
 import { Button } from '../components/Button';
 import { IngredientsTable } from '../components/IngredientsTable';
 import Layout from '../components/Layout';
-import { Modal } from '../components/Modal';
+import { Line } from '../components/Line';
+import { CustomModal } from '../components/Modal/CustomModal';
 import { EditForm } from '../components/RecipeForm/EditForm';
 import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
+import { HiOutlineClipboardCopy } from 'react-icons/hi'
 
 const RecipeContainer = styled.div``;
+
+const NameContainer = styled.div`
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+`;
+
+const CopyButton = styled.button`
+  height: fit-content;
+`;
 
 const RecipeView: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -59,13 +71,16 @@ const RecipeView: React.FC = () => {
         {recipe && (
           <>
             <RecipeContainer>
-              <h1>{recipe.name}</h1>
+              <NameContainer>
+                <h1>{recipe.name}</h1>
+                <CopyButton><HiOutlineClipboardCopy size={32}/></CopyButton>
+              </NameContainer>
               <p>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</p>
               <h2>Ingredients</h2>
-              <hr />
+              <Line />
               <IngredientsTable ingredients={recipe.ingredients} />
               <h2>Description</h2>
-              <hr />
+              <Line />
               <p>{recipe.description}</p>
             </RecipeContainer>
             <Button onClick={() => setIsOpen(!isOpen)}>
@@ -79,10 +94,9 @@ const RecipeView: React.FC = () => {
         )}
         {recipeError}
       </div>
-      <Modal isOpen={isOpen}>
-        <EditForm id={recipeId} data={recipe}/>
-        <button onClick={() => setIsOpen(!isOpen)}>Close</button>
-      </Modal>
+      <CustomModal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
+        <EditForm id={recipeId} data={recipe} />
+      </CustomModal>
     </Layout>
   )
 }

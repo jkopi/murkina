@@ -37,7 +37,7 @@ export const EditForm: React.FC<Props> = ({ id, data }) => {
       .doc(id)
       .update({
         ...values,
-        editTime
+        updatedAt: editTime
       }).then(() => {
         toast.success(`Edited ${values.name}`)
       }).catch((error: Error) => {
@@ -55,19 +55,18 @@ export const EditForm: React.FC<Props> = ({ id, data }) => {
       ) => {
         editRecipe(values);
         setSubmitting(false);
-        console.log(editTime);
       }}>
       {({ values }) => (
         <FormComponent>
-          <Input name="name" type="text" placeholder={values.name}/>
-          <Input name="description" type="text" placeholder={values.description}/>
+          <Input name="name" type="text" placeholder={data.name}/>
+          <Input name="description" type="text" placeholder={data.description}/>
           {values.ingredients?.map((_, i) => (
             <IngredientContainer key={i}>
               <FormInput placeholder="Amount" name={`ingredients[${i}].amount`}/>
               <FormInput placeholder="Name" name={`ingredients[${i}].name`}/>
             </IngredientContainer>
           ))}
-          <button type="submit">Submit</button>
+          <button disabled={(JSON.stringify(data) === JSON.stringify(values)) ? true : false}>Submit</button>
         </FormComponent>
       )}
     </Formik>
