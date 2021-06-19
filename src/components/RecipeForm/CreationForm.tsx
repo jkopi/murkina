@@ -1,3 +1,4 @@
+import { FormControl, FormLabel, Button, Divider, Box, Flex } from '@chakra-ui/react';
 import cuid from 'cuid';
 import { Field, FieldArray, FieldArrayRenderProps, Formik, FormikHelpers } from 'formik'
 import React from 'react'
@@ -6,7 +7,6 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { firestore, timestamp } from '../../config/firebase';
 import { Recipe } from '../../interfaces/Recipe'
-import { Button } from '../Button';
 import { FormComponent } from './FormComponent';
 import { Input } from './Input';
 import RecipeSchema from './Schema';
@@ -17,12 +17,6 @@ const FormInput = styled(Field)`
   border-radius: 4px;
   border: 1px solid #ccc;
   margin: .5rem;
-`;
-
-const IngredientContainer = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
 `;
 
 export const CreationForm: React.FC = () => {
@@ -62,50 +56,53 @@ export const CreationForm: React.FC = () => {
       ) => {
         createRecipe(values);
         setSubmitting(false);
-        // resetForm();
         console.log(JSON.stringify(values));
       }}
     >
       {({ values }) => (
         <FormComponent>
-          <label htmlFor="name">
-            <h3>Recipe name</h3>
-          </label>
-          <Input
-            name="name"
-            type="text"
-            placeholder="Recipe name"
-          />
+          <FormControl id="name">
+            <FormLabel htmlFor="name">Recipe name</FormLabel>
+            <Input
+              name="name"
+              type="text"
+              placeholder="Recipe name"
+            />
+          </FormControl>
 
-          <label htmlFor="description">
-            <h3>Description</h3>
-          </label>
-          <Input
-            name="description"
-            type="text"
-            placeholder="Description"
-          />
-
-          <label htmlFor="ingredients">
-            <h3>Ingredients</h3>
-          </label>
-          <FieldArray
-            name="ingredients"
-            render={(helpers: FieldArrayRenderProps) => (
-              <div>
-                {values.ingredients?.map((_, i) => (
-                  <IngredientContainer key={i}>
-                    <FormInput placeholder="Amount" name={`ingredients[${i}].amount`} />
-                    <FormInput placeholder="Name" name={`ingredients[${i}].name`} />
-                    <Button onClick={() => helpers.remove(i)}>remove</Button>
-                  </IngredientContainer>
-                ))}
-                <Button onClick={() => helpers.push({ amount: '', name: '' })}>Add new</Button>
-              </div>
-            )}
-          />
-          <hr />
-          <button type="submit">Submit</button>
+          <FormControl id="description">
+            <FormLabel htmlFor="description">Description</FormLabel>
+            <Input
+              name="description"
+              type="text"
+              placeholder="Description"
+            />
+          </FormControl>
+          
+          <FormControl>
+            <FormLabel htmlFor="ingredients">Ingredients</FormLabel>
+            <FieldArray
+              name="ingredients"
+              render={(helpers: FieldArrayRenderProps) => (
+                <Box mb="2">
+                  <Box mb="2">
+                    {values.ingredients?.map((_, i) => (
+                      <Flex alignItems="center" key={i}>
+                        <FormInput placeholder="Amount" name={`ingredients[${i}].amount`} />
+                        <FormInput placeholder="Name" name={`ingredients[${i}].name`} />
+                        <Button colorScheme="red" onClick={() => helpers.remove(i)}>remove</Button>
+                      </Flex>
+                    ))}
+                  </Box>
+                  <Button colorScheme="orange" onClick={() => helpers.push({ amount: '', name: '' })}>Add new</Button>
+                </Box>
+              )}
+            />
+          </FormControl>
+          <Divider />
+          <Box mt="5">
+            <Button type="submit" colorScheme="orange">Submit</Button>
+          </Box>
         </FormComponent>
       )}
     </Formik>

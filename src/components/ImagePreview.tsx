@@ -1,6 +1,6 @@
+import { Button } from '@chakra-ui/react';
 import React, { useEffect } from 'react'
 import styled from 'styled-components';
-import { Button } from './Button';
 
 const Image = styled.img`
   height: 500px;

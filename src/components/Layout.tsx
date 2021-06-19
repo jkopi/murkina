@@ -1,47 +1,17 @@
+import { Container, Link, List, ListItem } from '@chakra-ui/react';
 import React from 'react'
-import { Link } from 'react-router-dom';
-import styled from 'styled-components'
+import { Link as RouterLink } from 'react-router-dom';
 import { auth } from '../config/firebase';
 import Header from './Header';
 
-const Container = styled.div`
-  /* margin: auto; */
-  margin-left: 200px;
-  max-width: 1070px;
-`;
-
-const SideBar = styled.div`
-  width: 200px;
-  height: 100%;
-  float: left;
-  overflow-x: hidden;
-  padding-right: 5px;
-  left: 0;
-`;
-
-const List = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-const Item = styled.li`
-  margin: .5rem;
-  padding: .5rem;
-  border-bottom: 1px solid grey;
-`;
-
-const StyledLink = styled(Link)`
-  color: black;
-  padding: 2px;
-  text-decoration: none;
-
-  &&:hover {
-    /* border: 1px solid grey; */
-    border-radius: 5px;
-    background-color: #ffaa64;
-    transition: 200ms linear;
-  }
-`;
+// const SideBar = styled.div`
+//   width: 200px;
+//   height: 100%;
+//   float: left;
+//   overflow-x: hidden;
+//   padding-right: 5px;
+//   left: 0;
+// `;
 
 interface Props {
   children?: React.ReactNode;
@@ -51,7 +21,7 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      <SideBar>
+      {/* <Container>
         <List>
           <Item>
             <StyledLink to="/">
@@ -78,8 +48,15 @@ const Layout: React.FC<Props> = ({ children }) => {
             </>
           )}
         </List>
-      </SideBar>
-      <Container>
+      </Container> */}
+      <List>
+        <ListItem>
+          <Link as={RouterLink} to="/recipe/create">
+            <span>Create new</span>
+          </Link>
+        </ListItem>
+      </List>
+      <Container maxW="container.xl">
         {children}
       </Container>
     </>

@@ -1,36 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import toast from 'react-hot-toast';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { Button } from '../components/Button';
+import { useHistory, useParams } from 'react-router-dom';
 import { IngredientsTable } from '../components/IngredientsTable';
 import Layout from '../components/Layout';
-import { Line } from '../components/Line';
 import { CustomModal } from '../components/Modal/CustomModal';
 import { EditForm } from '../components/RecipeForm/EditForm';
-import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
 import { HiOutlineClipboardCopy } from 'react-icons/hi'
-
-const RecipeContainer = styled.div``;
-
-const NameContainer = styled.div`
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-`;
-
-const CopyButton = styled.button`
-  height: fit-content;
-`;
+import { Box, Button, Flex, Heading, Text, IconButton, useDisclosure, HStack, Divider, Spinner, Tooltip } from '@chakra-ui/react';
+import { BreadCrumb } from '../components/BreadCrumb';
 
 const RecipeView: React.FC = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
   const history = useHistory();
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [
     recipe,
@@ -65,36 +51,48 @@ const RecipeView: React.FC = () => {
 
   return (
     <Layout>
-      <div>
-        <Link to="/">back</Link>
-        {recipeLoading && <Spinner />}
-        {recipe && (
-          <>
-            <RecipeContainer>
-              <NameContainer>
-                <h1>{recipe.name}</h1>
-                <CopyButton><HiOutlineClipboardCopy size={32}/></CopyButton>
-              </NameContainer>
-              <p>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</p>
-              <h2>Ingredients</h2>
-              <Line />
-              <IngredientsTable ingredients={recipe.ingredients} />
-              <h2>Description</h2>
-              <Line />
+      {recipeLoading && <Spinner />}
+      {recipe && (
+        <>
+          <BreadCrumb recipeName={recipe.name} />
+          <Flex mb="2" mt="2" justifyContent="space-between" align="center">
+            <Box>
+              <Heading>{recipe.name}</Heading>
+            </Box>
+            <Box>
+              <Tooltip label="copy to clipboard">
+                <IconButton
+                  aria-label="copy to clipboard"
+                  icon={<HiOutlineClipboardCopy />}
+                  fontSize="30px"
+                />
+              </Tooltip>
+            </Box>
+          </Flex>
+          <Text>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</Text>
+          <Divider mt="2" colorScheme="orange" />
+          <Box mt="5" mb="5">
+            <Heading size="lg">Ingredients</Heading>
+            <IngredientsTable ingredients={recipe.ingredients} />
+          </Box>
+          <Box mt="8" mb="5">
+            <Heading size="lg">Description</Heading>
+            <Box w="100%" p="4" mt="2" borderWidth="1px" borderRadius="lg">
               <p>{recipe.description}</p>
-            </RecipeContainer>
-            <Button onClick={() => setIsOpen(!isOpen)}>
+            </Box>
+          </Box>
+          <HStack>
+            <Button colorScheme="orange" onClick={onOpen}>
               Edit recipe
             </Button>
-            {' '}
-            <Button onClick={() => deleteRecipe()}>
+            <Button colorScheme="red" onClick={() => deleteRecipe()}>
               Delete recipe
             </Button>
-          </>
-        )}
-        {recipeError}
-      </div>
-      <CustomModal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
+          </HStack>
+        </>
+      )}
+      {recipeError}
+      <CustomModal isOpen={isOpen} onClose={onClose}>
         <EditForm id={recipeId} data={recipe} />
       </CustomModal>
     </Layout>

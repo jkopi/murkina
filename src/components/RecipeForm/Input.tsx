@@ -1,6 +1,7 @@
 import { useField } from 'formik';
 import React from 'react'
 import styled from 'styled-components';
+import { Box, Input as FormInput } from '@chakra-ui/react';
 
 interface Props {
   name: string;
@@ -8,17 +9,6 @@ interface Props {
   textarea?: boolean;
   placeholder?: string;
 }
-
-const Container = styled.div`
-  margin: 1rem;
-`;
-
-const StyledInput = styled.input`
-  padding: .5rem;
-  font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-`;
 
 const ErrorText = styled.p`
   font-size: 14px;
@@ -31,11 +21,11 @@ export const Input: React.FC<Props> = ({ name, type, textarea, placeholder, ...p
   const [ field, meta ] = useField({...props, type: type, name: name})
 
   return (
-    <Container>
-      <StyledInput {...field} placeholder={placeholder}/>
+    <Box mt="5" mb="5">
+      {textarea ? <>asd</> : <FormInput {...field} placeholder={placeholder} colorScheme="orange" variant="outline" />}
       {meta.error && meta.touched ? (
         <ErrorText>{meta.error}</ErrorText>
       ) : null}
-    </Container>
+    </Box>
   )
 }
