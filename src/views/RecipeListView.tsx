@@ -7,7 +7,7 @@ import Spinner from '../components/Spinner';
 import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
 
-const FoodList = styled.ul`
+const List = styled.ul`
   list-style-type: none;
   padding: 0;
 `;
@@ -29,14 +29,21 @@ const FoodListView: React.FC = () => {
   return (
     <Layout>
       {recipesLoading && <Spinner />}
-      {recipes && (
-        <FoodList>
-          {recipes.map((rcp: Recipe) => (
-            <ListItem key={rcp.id}>
-              <RecipeItem recipe={rcp} />
-            </ListItem>
-          ))}
-        </FoodList>
+      {recipes ? (
+        <>
+          <p><b>{recipes.length}</b> recipes so far</p>
+          <List>
+            {recipes.map((rcp: Recipe) => (
+              <ListItem key={rcp.id}>
+                <RecipeItem recipe={rcp} />
+              </ListItem>
+            ))}
+          </List>
+        </>
+      ) : (
+        <>
+          <p>No recipes found..</p>
+        </>
       )}
       {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
     </Layout>
