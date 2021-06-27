@@ -1,7 +1,6 @@
 import { Container, Link, List, ListItem } from '@chakra-ui/react';
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom';
-import { auth } from '../config/firebase';
 import Header from './Header';
 
 // const SideBar = styled.div`
