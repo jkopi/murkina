@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import toast from 'react-hot-toast';
 import { useHistory, useParams } from 'react-router-dom';
@@ -60,13 +60,14 @@ const RecipeView: React.FC = () => {
               <Heading>{recipe.name}</Heading>
             </Box>
             <Box>
-              <Tooltip label="copy to clipboard">
+              {/* TODO
+              <Tooltip label="share?">
                 <IconButton
-                  aria-label="copy to clipboard"
+                  aria-label="share?"
                   icon={<HiOutlineClipboardCopy />}
                   fontSize="30px"
                 />
-              </Tooltip>
+              </Tooltip> */}
             </Box>
           </Flex>
           <Text>Created at: {recipe.createdAt.toDate().toLocaleDateString()}</Text>
