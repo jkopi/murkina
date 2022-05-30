@@ -1,9 +1,13 @@
-# murkina
+# 🍴 murkina
 
-Food related application in the making 🍕
+Web app for your most delicious recipes!
 
 
-## Local installation
+## Requirements
+- [NodeJS](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/)
+
+## 🔧 Local installation
 
 
 1. initialize a firebase project in [firebase console](https://console.firebase.google.com/u/0/)
@@ -28,3 +32,13 @@ REACT_APP_FIREBASE_MESSAGING_SENDER_ID="<messagingSender>"
 REACT_APP_FIREBASE_APP_ID="<appId>"
 REACT_APP_FIREBASE_MEASUREMENT_ID="<measurementId>"
 ``` 
+
+## 🚀 Launch it!
+```sh
+yarn start
+```
+
+## Built with
+- [React](https://reactjs.org/)
+- [react-firebase-hooks](https://github.com/csfrequency/react-firebase-hooks)
+- [Chakra UI](https://chakra-ui.com/)
