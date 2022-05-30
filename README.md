@@ -16,11 +16,7 @@ git clone https://github.com/jkopi/murkina.git
 ```
 6. install dependencies by running
 ```sh
-yarn
-
-# or 
-
-npm install
+yarn install
 ```
 7. create a .env file into the project root (see .env.example) and paste in the firebase web app configuration
 ```
