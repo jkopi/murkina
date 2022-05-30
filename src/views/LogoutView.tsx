@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { useHistory } from 'react-router';
 import { auth } from '../config/firebase';
 
-const LogoutView: React.FC = () => {
+const LogoutView = () => {
   const [error, setError] = useState<Error>();
   const history = useHistory();
 
@@ -22,7 +22,7 @@ const LogoutView: React.FC = () => {
   }
   return (
     <>
-      <button onClick={() => signOut()}>Sign me out!</button>
+      <button onClick={signOut}>Sign me out!</button>
       {error && <p>{error}</p>}
     </>
   )

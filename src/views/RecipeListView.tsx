@@ -1,22 +1,34 @@
-import { Box, List, ListItem, Spinner } from '@chakra-ui/react';
-import React from 'react'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { Box, Link, List, ListItem, Spinner, Text } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import Layout from '../components/Layout';
-import RecipeItem from '../components/RecipeItem';
-import { firestore } from '../config/firebase';
+import RecipeItem from '../components/Recipe/RecipeItem';
+import { firestore, storage } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
 
-const FoodListView: React.FC = () => {
-  const [
-    recipes, recipesLoading, recipesError
-  ] = useCollectionData<Recipe>(
-    firestore
-      .collection("recipes"),
-    {
-      idField: "id",
-      snapshotListenOptions: { includeMetadataChanges: true },
-    }
-  );
+const FoodListView = () => {
+  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [recipes, recipesLoading, recipesError] = useCollectionData<Recipe>(firestore.collection('recipes'), {
+    idField: 'id',
+    snapshotListenOptions: { includeMetadataChanges: true },
+  });
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      let result = await storage.child('recipe-images').listAll();
+      let urlPromises = result.items.map((imageRef) => imageRef.getDownloadURL());
+
+      return Promise.all(urlPromises);
+    };
+
+    const loadImages = async () => {
+      const urls = await fetchImages();
+      setImageUrls(urls);
+    };
+    loadImages();
+  }, []);
+  console.log(imageUrls)
+
 
   return (
     <Layout>
@@ -26,19 +38,17 @@ const FoodListView: React.FC = () => {
         </Box>
       )}
       {recipes && (
-        <>
-          <List>
-            {recipes.map((rcp: Recipe) => (
-              <ListItem key={rcp.id}>
-                <RecipeItem recipe={rcp} />
-              </ListItem>
-            ))}
-          </List>
-        </>
+        <List>
+          {recipes.map((rcp: Recipe) => (
+            <ListItem key={rcp.id}>
+              <RecipeItem recipe={rcp} />
+            </ListItem>
+          ))}
+        </List>
       )}
       {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
     </Layout>
-  )
-}
+  );
+};
 
 export default FoodListView;

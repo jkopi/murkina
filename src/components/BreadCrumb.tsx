@@ -6,7 +6,7 @@ interface Props {
   recipeName: string;
 }
 
-export const BreadCrumb: React.FC<Props> = ({ recipeName }) => {
+export const BreadCrumb = ({ recipeName }: Props) => {
   return (
     <Breadcrumb>
       <BreadcrumbItem>

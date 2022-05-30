@@ -13,7 +13,7 @@ interface Props {
   setPreview(preview: string | undefined): void;
 }
 
-export const ImagePreview: React.FC<Props> = ({ file, setFile, preview, setPreview }) => {
+export const ImagePreview = ({ file, setFile, preview, setPreview }: Props) => {
   useEffect(() => {
     console.log("mounted")
     if (!file) {

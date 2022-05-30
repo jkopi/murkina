@@ -3,7 +3,7 @@ import { IconButton, useColorMode } from '@chakra-ui/react'
 import { FiSun, FiMoon } from 'react-icons/fi'
 
 
-export const ColorModeSwitch: React.FC = () => {
+export const ColorModeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const iconColor = {
     light: "#fff",

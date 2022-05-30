@@ -22,7 +22,7 @@ const FormInput = styled(Field)`
   margin: .5rem;
 `;
 
-export const EditForm: React.FC<Props> = ({ id, data }) => {
+export const EditForm = ({ id, data }: Props) => {
   const editTime = timestamp.fromDate(new Date());
 
   const editRecipe = (values: Recipe) => {
@@ -53,15 +53,16 @@ export const EditForm: React.FC<Props> = ({ id, data }) => {
       }}>
       {({ values }) => (
         <FormComponent>
-          <Input name="name" type="text" placeholder={data.name}/>
-          <Input name="description" type="text" placeholder={data.description}/>
+          <Input id="name" name="name" type="text" placeholder={data.name}/>
+          <Input id="description" name="description" type="text" placeholder={data.description}/>
           {values.ingredients?.map((_, i) => (
             <Flex key={i}>
               <FormInput placeholder="Amount" name={`ingredients[${i}].amount`}/>
+              <FormInput placeholder="Unit" name={`ingredients[${i}].unit`}/>
               <FormInput placeholder="Name" name={`ingredients[${i}].name`}/>
             </Flex>
           ))}
-          <Button disabled={(JSON.stringify(data) === JSON.stringify(values)) ? true : false}>Submit</Button>
+          <Button type="submit" disabled={(JSON.stringify(data) === JSON.stringify(values)) ? true : false}>Submit</Button>
         </FormComponent>
       )}
     </Formik>

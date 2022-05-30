@@ -9,8 +9,9 @@ import { Toaster } from 'react-hot-toast';
 import ToastConfig from './config/toaster';
 import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react';
 import customTheme from './config/theme';
+import { AuthGuard } from './components/AuthGuard';
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <ChakraProvider resetCSS theme={customTheme}>
       <ColorModeProvider
@@ -35,7 +36,9 @@ const App: React.FC = () => {
               <RecipeListView />
             </Route>
             <Route exact path="/recipe/create">
-              <CreateRecipeView />
+              <AuthGuard>
+                <CreateRecipeView />
+              </AuthGuard>
             </Route>
             <Route exact path="/recipe/:recipeId">
               <RecipeView />

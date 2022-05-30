@@ -7,9 +7,9 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export const CustomModal: React.FC<Props> = ({ isOpen, onClose, children }) => {
+export const CustomModal = ({ isOpen, onClose, children }: Props) => {
   return (
-    <Modal size="xl" isOpen={isOpen} onClose={onClose}>
+    <Modal size="5xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay/>
       <ModalContent>
         <ModalHeader>Editing</ModalHeader>

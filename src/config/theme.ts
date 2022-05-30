@@ -34,6 +34,8 @@ const fontWeights = {
 }
 
 const overrides = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
   fonts,
   colors,
   fontSizes,

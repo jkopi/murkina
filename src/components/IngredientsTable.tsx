@@ -6,13 +6,14 @@ interface Props {
   ingredients?: Ingredient[];
 }
 
-export const IngredientsTable: React.FC<Props> = ({ ingredients }) => {
+export const IngredientsTable = ({ ingredients }: Props) => {
   return (
-    <Table colorScheme="orange">
+    <Table colorScheme="orange" my="4">
       <Thead>
         <Tr>
-          <Th>amount</Th>
-          <Th>ingredient</Th>
+          <Th textColor="facebook.900">amount</Th>
+          <Th textColor="facebook.900">unit</Th>
+          <Th textColor="facebook.900">ingredient</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -20,6 +21,9 @@ export const IngredientsTable: React.FC<Props> = ({ ingredients }) => {
           <Tr key={ingredient.name}>
             <Td>
               <span>{ingredient.amount}</span>
+            </Td>
+            <Td>
+              <span>{ingredient.unit ?? '-'}</span>
             </Td>
             <Td>
               <span>{ingredient.name}</span>

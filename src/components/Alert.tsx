@@ -8,7 +8,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const Alert: React.FC<Props> = ({ headerText, bodyText, isOpen, onClose }) => {
+export const Alert = ({ headerText, bodyText, isOpen, onClose }: Props) => {
   // TODO: fix type
   const ref = useRef<any>(null);
   return (

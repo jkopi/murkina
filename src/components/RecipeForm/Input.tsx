@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Box, Input as FormInput } from '@chakra-ui/react';
 
 interface Props {
+  id: string;
   name: string;
   type: string;
   textarea?: boolean;
@@ -17,8 +18,8 @@ const ErrorText = styled.p`
   color: #ff0000;
 `;
 
-export const Input: React.FC<Props> = ({ name, type, textarea, placeholder, ...props }) => {
-  const [ field, meta ] = useField({...props, type: type, name: name})
+export const Input = ({ id, name, type, textarea, placeholder, ...props }: Props) => {
+  const [ field, meta ] = useField({...props, type: type, name: name, id: id})
 
   return (
     <Box mt="5" mb="5">

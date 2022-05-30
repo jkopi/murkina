@@ -5,7 +5,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export const FormComponent: React.FC<Props> = ({ children, ...props }) => {
+export const FormComponent = ({ children, ...props }: Props) => {
   return (
     <Form {...props}>
       {children}
