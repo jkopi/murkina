@@ -13,7 +13,11 @@ const Header = ({ children }: Props) => {
 
   return (
     <Flex my="8" mx="5" flexDir="column">
-      <Heading fontWeight="fontWeights.normal">🍕 murkina</Heading>
+      <Heading fontWeight="fontWeights.normal">
+        <Link as={RouterLink} to="/">
+          🍕 murkina
+        </Link>
+      </Heading>
       {user && <Text>Hello, {user?.displayName}</Text>}
       <HStack spacing="24px">
         {!user ? (

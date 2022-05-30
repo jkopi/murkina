@@ -50,7 +50,7 @@ export const CreationForm = () => {
       .then(() => {
         toast.success(`Created ${values.name}`);
         setTimeout(() => {
-          history.push('/');
+          history.push(`/recipe/${values.id}`);
         }, 500);
       })
       .catch((error: Error) => {
