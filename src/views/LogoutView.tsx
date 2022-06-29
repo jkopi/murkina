@@ -1,19 +1,19 @@
 import { Stack, Button, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { auth } from '../config/firebase';
 
 const LogoutView = () => {
   const [error, setError] = useState<Error>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const signOut = () => {
     auth
       .signOut()
       .then((_) => {
         toast.success(`Logout success`);
-        history.push('/');
+        navigate('/');
       })
       .catch((error: Error) => {
         toast.success('Something went wrong');

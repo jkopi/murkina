@@ -1,13 +1,12 @@
 import { FormControl, FormLabel, Button, Divider, Box, Flex } from '@chakra-ui/react';
 import cuid from 'cuid';
-import { Field, FieldArray, FieldArrayRenderProps, Formik, FormikHelpers } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, Formik, FormikHelpers, Form } from 'formik';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { firestore, storage, timestamp } from '../../config/firebase';
 import { Recipe } from '../../interfaces/Recipe';
-import { FormComponent } from './FormComponent';
 import { Input } from './Input';
 import RecipeSchema from './Schema';
 
@@ -23,7 +22,7 @@ export const CreationForm = () => {
   const [imageName, setImageName] = useState<string>('');
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const currentTime = timestamp.fromDate(new Date());
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // image upload handler
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +49,7 @@ export const CreationForm = () => {
       .then(() => {
         toast.success(`Created ${values.name}`);
         setTimeout(() => {
-          history.push(`/recipe/${values.id}`);
+          navigate(`/recipe/${values.id}`);
         }, 500);
       })
       .catch((error: Error) => {
@@ -84,7 +83,7 @@ export const CreationForm = () => {
       }}
     >
       {({ values }) => (
-        <FormComponent>
+        <Form>
           <FormControl id="name">
             <FormLabel htmlFor="name">Recipe name</FormLabel>
             <Input id="name" name="name" type="text" placeholder="Recipe name" />
@@ -132,7 +131,7 @@ export const CreationForm = () => {
               Submit
             </Button>
           </Box>
-        </FormComponent>
+        </Form>
       )}
     </Formik>
   );

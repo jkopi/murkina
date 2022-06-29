@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore';
 import toast from 'react-hot-toast';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IngredientsTable } from '../components/IngredientsTable';
 import Layout from '../components/Layout';
 import { CustomModal } from '../components/Modal/CustomModal';
@@ -28,7 +28,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 const RecipeView = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [user] = useAuthState(auth);
   const [image, setImage] = useState<string>('');
@@ -49,7 +49,7 @@ const RecipeView = () => {
         .then((_) => {
           toast.success('Recipe deleted');
           setTimeout(() => {
-            history.push('/');
+            navigate('/');
           }, 500);
         })
         .catch((error: Error) => {

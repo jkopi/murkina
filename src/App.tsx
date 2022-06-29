@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { Route, Routes } from 'react-router-dom';
 import RecipeListView from './views/RecipeListView';
 import RecipeView from './views/RecipeView';
 import CreateRecipeView from './views/CreateRecipeView';
@@ -16,39 +16,28 @@ const App = () => {
     <ChakraProvider resetCSS theme={customTheme}>
       <ColorModeProvider
         options={{
-          initialColorMode: "light",
-          useSystemColorMode: true
+          initialColorMode: 'light',
+          useSystemColorMode: true,
         }}
       >
-        <Router>
-          <Switch>
-            <Route exact path="/sign-in">
-              <LoginView />
-            </Route>
-          </Switch>
-          <Switch>
-            <Route exact path="/sign-out">
-              <LogoutView />
-            </Route>
-          </Switch>
-          <Switch>
-            <Route exact path="/">
-              <RecipeListView />
-            </Route>
-            <Route exact path="/recipe/create">
+        <Routes>
+          <Route path="/" element={<RecipeListView />} />
+          <Route path="/sign-in" element={<LoginView />} />
+          <Route path="/sign-out" element={<LogoutView />} />
+          <Route
+            path="/recipe/create"
+            element={
               <AuthGuard>
                 <CreateRecipeView />
               </AuthGuard>
-            </Route>
-            <Route exact path="/recipe/:recipeId">
-              <RecipeView />
-            </Route>
-          </Switch>
-          <Toaster toastOptions={ToastConfig}/>
-        </Router>
+            }
+          />
+          <Route path="/recipe/:recipeId" element={<RecipeView />} />
+        </Routes>
+        <Toaster toastOptions={ToastConfig} />
       </ColorModeProvider>
     </ChakraProvider>
   );
-}
+};
 
 export default App;

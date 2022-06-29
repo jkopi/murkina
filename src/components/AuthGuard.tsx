@@ -1,30 +1,20 @@
-import { Spinner } from '@chakra-ui/react';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useHistory } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../config/firebase';
 
 interface Props {
-  children?: React.ReactNode;
+  children: JSX.Element;
 }
 
 export const AuthGuard = ({ children }: Props) => {
   const [user, userLoading, userError] = useAuthState(auth);
-  const navigate = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  if (user) {
-    return <>{children}</>;
+  if (!user) {
+    return <Navigate to="/sign-in" state={{ from: location }} replace/>;
   }
 
-  if (userLoading) {
-    return <Spinner />;
-  }
-
-  if (userError) {
-    return <p>Error!</p>;
-  }
-
-  navigate.push("/");
-
-  return null;
+  return children;
 };

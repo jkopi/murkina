@@ -1,16 +1,15 @@
 import { Button, Flex } from '@chakra-ui/react'
-import { Field, Formik, FormikHelpers } from 'formik'
+import { Field, Formik, FormikHelpers, Form } from 'formik'
 import React from 'react'
 import toast from 'react-hot-toast'
 import styled from 'styled-components'
 import { firestore, timestamp } from '../../config/firebase'
 import { Recipe } from '../../interfaces/Recipe'
-import { FormComponent } from './FormComponent'
 import { Input } from './Input'
 import RecipeSchema from './Schema'
 
 interface Props {
-  id: string;
+  id?: string;
   data: Recipe | any;
 }
 
@@ -52,7 +51,7 @@ export const EditForm = ({ id, data }: Props) => {
         setSubmitting(false);
       }}>
       {({ values }) => (
-        <FormComponent>
+        <Form>
           <Input id="name" name="name" type="text" placeholder={data.name}/>
           <Input id="description" name="description" type="text" placeholder={data.description}/>
           {values.ingredients?.map((_, i) => (
@@ -63,7 +62,7 @@ export const EditForm = ({ id, data }: Props) => {
             </Flex>
           ))}
           <Button type="submit" disabled={(JSON.stringify(data) === JSON.stringify(values)) ? true : false}>Submit</Button>
-        </FormComponent>
+        </Form>
       )}
     </Formik>
   )

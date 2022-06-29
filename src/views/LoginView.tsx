@@ -1,12 +1,12 @@
 import { Button, Container, Stack, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { auth, googleProvider } from '../config/firebase';
 
 const LoginView = () => {
   const [error, setError] = useState<Error>();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const authWithGoogle = () => {
     auth
@@ -14,7 +14,7 @@ const LoginView = () => {
       .then((res) => {
         console.log(res);
         toast.success(`Logged in as ${res.user?.displayName}`);
-        history.push('/');
+        navigate('/');
       })
       .catch((error: Error) => {
         console.error(error);
