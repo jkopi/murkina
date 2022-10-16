@@ -1,34 +1,31 @@
-import { Box, Link, List, ListItem, Spinner, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Menu,
+  MenuButton,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  SimpleGrid,
+  Spinner,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { HiChevronDown } from 'react-icons/hi';
+import { BsFillGrid3X3GapFill, BsList } from 'react-icons/bs';
 import Layout from '../components/Layout';
-import RecipeItem from '../components/Recipe/RecipeItem';
-import { firestore, storage } from '../config/firebase';
+import { RecipeCard, RecipeListItem } from '../components/Recipe';
+import { firestore } from '../config/firebase';
 import { Recipe } from '../interfaces/Recipe';
 
 const FoodListView = () => {
-  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [viewType, setViewType] = useState<'list' | 'grid'>('grid');
   const [recipes, recipesLoading, recipesError] = useCollectionData<Recipe>(firestore.collection('recipes'), {
     idField: 'id',
     snapshotListenOptions: { includeMetadataChanges: true },
   });
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      let result = await storage.child('recipe-images').listAll();
-      let urlPromises = result.items.map((imageRef) => imageRef.getDownloadURL());
-
-      return Promise.all(urlPromises);
-    };
-
-    const loadImages = async () => {
-      const urls = await fetchImages();
-      setImageUrls(urls);
-    };
-    loadImages();
-  }, []);
-  console.log(imageUrls)
-
 
   return (
     <Layout>
@@ -37,15 +34,38 @@ const FoodListView = () => {
           <Spinner size="lg" />
         </Box>
       )}
-      {recipes && (
-        <List>
-          {recipes.map((rcp: Recipe) => (
-            <ListItem key={rcp.id}>
-              <RecipeItem recipe={rcp} />
-            </ListItem>
-          ))}
-        </List>
+      <Flex direction="row" justifyContent="end" id="asdasd" my="2">
+        <Menu>
+          <MenuButton
+            aria-label="view-type-button"
+            as={Button}
+            rightIcon={<HiChevronDown />}
+            variant="outline"
+            rounded="md"
+          >
+            <Icon as={viewType === 'grid' ? BsFillGrid3X3GapFill : BsList} fontSize="2xl" />
+          </MenuButton>
+          <MenuList>
+            <MenuGroup title="Display style">
+              <MenuItem icon={<BsFillGrid3X3GapFill />} onClick={() => setViewType('grid')}>
+                Grid
+              </MenuItem>
+              <MenuItem icon={<BsList />} onClick={() => setViewType('list')}>
+                List
+              </MenuItem>
+            </MenuGroup>
+          </MenuList>
+        </Menu>
+      </Flex>
+      {viewType === 'grid' && (
+        <SimpleGrid columns={[1, 2, 3]} gap={8}>
+          {recipes?.length !== 0 && recipes?.map((recipe: Recipe) => <RecipeCard recipe={recipe} />)}
+        </SimpleGrid>
       )}
+      {viewType === 'list' &&
+        recipes?.length !== 0 &&
+        recipes?.map((recipe: Recipe) => <RecipeListItem recipe={recipe} />)}
+
       {recipesError && <strong>Error: {JSON.stringify(recipesError)}</strong>}
     </Layout>
   );

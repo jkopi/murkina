@@ -17,7 +17,8 @@ firebase.initializeApp(config);
 const firestore = firebase.firestore();
 const timestamp = firebase.firestore.Timestamp;
 const storage = firebase.storage().ref();
+const ref = (path: string) => firebase.storage().ref(path);
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const auth = firebase.auth();
 
-export { firestore, timestamp, storage, auth, googleProvider };
+export { firestore, timestamp, storage, auth, googleProvider, ref };

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { firestore, storage, timestamp } from '../../config/firebase';
 import { Recipe } from '../../interfaces/Recipe';
-import { Input } from './Input';
+import { Input } from '../Input';
 import RecipeSchema from './Schema';
 
 const FormInput = styled(Field)`

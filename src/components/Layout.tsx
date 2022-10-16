@@ -1,6 +1,6 @@
-import { Container, Flex, Link, List, ListItem } from '@chakra-ui/react';
-import React from 'react'
-import { Link as RouterLink } from 'react-router-dom';
+import { Container } from '@chakra-ui/react';
+import React from 'react';
+import { Footer } from './Footer';
 import Header from './Header';
 
 interface Props {
@@ -9,13 +9,12 @@ interface Props {
 
 const Layout = ({ children }: Props) => {
   return (
-    <>
+    <Container maxW="container.xl">
       <Header />
-      <Container maxW="container.xl">
-        {children}
-      </Container>
-    </>
-  )
-}
+      <main>{children}</main>
+      <Footer />
+    </Container>
+  );
+};
 
-export default Layout
+export default Layout;

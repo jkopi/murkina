@@ -23,7 +23,7 @@ export const Input = ({ id, name, type, textarea, placeholder, ...props }: Props
 
   return (
     <Box mt="5" mb="5">
-      {textarea ? <>asd</> : <FormInput {...field} placeholder={placeholder} colorScheme="orange" variant="outline" />}
+      <FormInput {...field} placeholder={placeholder} colorScheme="orange" variant="outline" />
       {meta.error && meta.touched ? (
         <ErrorText>{meta.error}</ErrorText>
       ) : null}

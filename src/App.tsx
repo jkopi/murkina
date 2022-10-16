@@ -17,7 +17,7 @@ const App = () => {
       <ColorModeProvider
         options={{
           initialColorMode: 'light',
-          useSystemColorMode: true,
+          useSystemColorMode: false,
         }}
       >
         <Routes>
